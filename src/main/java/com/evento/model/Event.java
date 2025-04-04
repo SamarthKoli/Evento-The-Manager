@@ -1,9 +1,15 @@
 package com.evento.model;
 
+import java.time.LocalDateTime;
+
+import com.evento.dto.WeatherInfo;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity(name = "Events")
 public class Event {
@@ -13,16 +19,23 @@ public class Event {
     private Long id;
     private String title;
     private String location;
-    private String dateTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime dateTime;
 
+    @ManyToOne
+    private User user;  // Link to User entity
+
+    private String weatherInfo;
     
     public Event() {
     }
-    public Event(Long id, String title, String location, String dateTime) {
+    public Event(Long id, String title, String location, LocalDateTime dateTime,User user, String weatherInfo) {
         this.id = id;
         this.title = title;
         this.location = location;
         this.dateTime = dateTime;
+        this.user=user;
+        this.weatherInfo=weatherInfo;
     }
     public Long getId() {
         return id;
@@ -42,11 +55,23 @@ public class Event {
     public void setLocation(String location) {
         this.location = location;
     }
-    public String getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
-    public void setDateTime(String dateTime) {
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
+    public String getWeatherInfo() {
+        return weatherInfo;
+    }
+    public void setWeatherInfo(String weatherInfo) {
+        this.weatherInfo = weatherInfo;
     }
     
     
